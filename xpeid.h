@@ -29,19 +29,7 @@ class XPEID : public XScanEngine {
     Q_OBJECT
 
 public:
-    struct SIGNATURE_RECORD {
-        QString sName;
-        QString sSignature;  // signature string compatible with XBinary::find_signature
-        QString sType;       // optional type/category (e.g., packer)
-        QString sDescription;
-    };
-
     explicit XPEID(QObject *pParent = nullptr);
-    XPEID(const XPEID &other);
-
-    bool loadDatabase(const QString &sDatabasePath, XBinary::PDSTRUCT *pPdStruct = nullptr);
-
-    QList<SIGNATURE_RECORD> getSignatures() const;
 
     virtual QString getEngineName() override;
 
@@ -49,8 +37,6 @@ protected:
     virtual void _processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId,
                                 XBinary::FT fileType, XScanEngine::SCAN_OPTIONS *pOptions, bool bAddUnknown, XBinary::PDSTRUCT *pPdStruct) override;
 
-private:
-    QList<SIGNATURE_RECORD> m_listSignatures;
 };
 
 #endif  // XPEID_H

@@ -29,16 +29,6 @@ XPEID::XPEID(QObject *pParent) : XScanEngine(pParent)
 {
 }
 
-XPEID::XPEID(const XPEID &other) : XScanEngine(other)
-{
-    m_listSignatures = other.m_listSignatures;
-}
-
-QList<XPEID::SIGNATURE_RECORD> XPEID::getSignatures() const
-{
-    return m_listSignatures;
-}
-
 QString XPEID::getEngineName()
 {
     return QString("PEiD");
@@ -56,92 +46,92 @@ static QString _normalizeSignature(const QString &sSignature)
     return XBinary::convertSignature(sSignature);
 }
 
-bool XPEID::loadDatabase(const QString &sDatabasePath, XBinary::PDSTRUCT *pPdStruct)
-{
-    m_listSignatures.clear();
+// bool XPEID::loadDatabase(const QString &sDatabasePath, XBinary::PDSTRUCT *pPdStruct)
+// {
+//     m_listSignatures.clear();
 
-    QString sPath = sDatabasePath;
+//     QString sPath = sDatabasePath;
 
-    QFileInfo fi(sPath);
-    if (fi.isDir()) {
-        QString sCandidate = QDir(sPath).filePath("userdb.txt");
-        if (QFileInfo::exists(sCandidate)) {
-            sPath = sCandidate;
-        }
-    }
+//     QFileInfo fi(sPath);
+//     if (fi.isDir()) {
+//         QString sCandidate = QDir(sPath).filePath("userdb.txt");
+//         if (QFileInfo::exists(sCandidate)) {
+//             sPath = sCandidate;
+//         }
+//     }
 
-    if (!QFileInfo::exists(sPath)) {
-        return false;
-    }
+//     if (!QFileInfo::exists(sPath)) {
+//         return false;
+//     }
 
-    QFile file(sPath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return false;
-    }
+//     QFile file(sPath);
+//     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//         return false;
+//     }
 
-    QTextStream stream(&file);
-    QString sLine;
-    QString sSection;
+//     QTextStream stream(&file);
+//     QString sLine;
+//     QString sSection;
 
-    while (!stream.atEnd()) {
-        sLine = stream.readLine();
-        if (sLine.trimmed().isEmpty()) {
-            continue;
-        }
+//     while (!stream.atEnd()) {
+//         sLine = stream.readLine();
+//         if (sLine.trimmed().isEmpty()) {
+//             continue;
+//         }
 
-        if (_isUserDBComment(sLine)) {
-            continue;
-        }
+//         if (_isUserDBComment(sLine)) {
+//             continue;
+//         }
 
-        if (sLine.startsWith("[")) {
-            // Section header: [something]
-            int nPos = sLine.indexOf("]");
-            if (nPos != -1) {
-                sSection = sLine.mid(1, nPos - 1).trimmed();
-            }
-            continue;
-        }
+//         if (sLine.startsWith("[")) {
+//             // Section header: [something]
+//             int nPos = sLine.indexOf("]");
+//             if (nPos != -1) {
+//                 sSection = sLine.mid(1, nPos - 1).trimmed();
+//             }
+//             continue;
+//         }
 
-        // Typical PEiD signature line: <name> <hex pattern> [; comment]
-        QString sClean = sLine;
-        int nCommentPos = sClean.indexOf(";");
-        if (nCommentPos >= 0) {
-            sClean = sClean.left(nCommentPos);
-        }
-        sClean = sClean.trimmed();
-        if (sClean.isEmpty()) {
-            continue;
-        }
+//         // Typical PEiD signature line: <name> <hex pattern> [; comment]
+//         QString sClean = sLine;
+//         int nCommentPos = sClean.indexOf(";");
+//         if (nCommentPos >= 0) {
+//             sClean = sClean.left(nCommentPos);
+//         }
+//         sClean = sClean.trimmed();
+//         if (sClean.isEmpty()) {
+//             continue;
+//         }
 
-        // Split first token as name, rest is signature pattern
-        QStringList parts = sClean.split(QRegExp("\\s+"), Qt::SkipEmptyParts);
-        if (parts.count() < 2) {
-            continue;
-        }
+//         // Split first token as name, rest is signature pattern
+//         QStringList parts = sClean.split(QRegExp("\\s+"), Qt::SkipEmptyParts);
+//         if (parts.count() < 2) {
+//             continue;
+//         }
 
-        QString sName = parts.takeFirst();
-        QString sType = sSection;
+//         QString sName = parts.takeFirst();
+//         QString sType = sSection;
 
-        QString sSignature = parts.join(" ");
-        sSignature = _normalizeSignature(sSignature);
+//         QString sSignature = parts.join(" ");
+//         sSignature = _normalizeSignature(sSignature);
 
-        if (sSignature.isEmpty()) {
-            continue;
-        }
+//         if (sSignature.isEmpty()) {
+//             continue;
+//         }
 
-        SIGNATURE_RECORD record = {};
-        record.sName = sName;
-        record.sSignature = sSignature;
-        record.sType = sType;
-        record.sDescription = QString();
+//         SIGNATURE_RECORD record = {};
+//         record.sName = sName;
+//         record.sSignature = sSignature;
+//         record.sType = sType;
+//         record.sDescription = QString();
 
-        m_listSignatures.append(record);
-    }
+//         m_listSignatures.append(record);
+//     }
 
-    file.close();
+//     file.close();
 
-    return (m_listSignatures.count() > 0);
-}
+//     return (m_listSignatures.count() > 0);
+// }
 
 void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId,
                             XBinary::FT fileType, XScanEngine::SCAN_OPTIONS *pOptions, bool bAddUnknown, XBinary::PDSTRUCT *pPdStruct)
@@ -171,17 +161,16 @@ void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESUL
         if (XBinary::isPdStructNotCanceled(pPdStruct)) {
             const SIGNATURE_RECORD &signature = m_listSignatures.at(i);
 
-            if (binary.isSignaturePresent(&memoryMap, 0, nSize, signature.sSignature, pPdStruct)) {
+            if (binary.isSignaturePresent(&memoryMap, 0, nSize, signature.sText, pPdStruct)) {
                 XScanEngine::SCANSTRUCT ss = {};
                 ss.id = resultId;
                 ss.parentId = parentId;
-                ss.type = XScanEngine::RECORD_TYPE_PETOOL;
-                ss.name = XScanEngine::RECORD_NAME_UNKNOWN;
-                ss.sType = QString("PEiD");
+                ss.sType = signature.sType;
                 ss.sName = signature.sName;
-                ss.sVersion = QString();
-                ss.sInfo = signature.sType;
-                ss.varInfo = signature.sSignature;
+                ss.type = XScanEngine::recordTypeStringToId(signature.sType);
+                ss.name = XScanEngine::recordNameStringToId(signature.sName);
+                ss.sVersion = signature.sVersion;;
+                ss.sInfo = signature.sInfo;
                 ss.bIsUnknown = false;
                 ss.bIsHeuristic = false;
                 ss.bIsAHeuristic = false;
