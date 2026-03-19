@@ -32,6 +32,9 @@ public:
     explicit XPEID(QObject *pParent = nullptr);
 
     virtual QString getEngineName() override;
+    virtual bool isSignatureFileValid(const QString &sSignatureFilePath) override;
+    virtual QList<SIGNATURE_RECORD> getSignaturesFromData(const QString &sData, const QString &sSignatureFilePath, XBinary::FT fileType,
+                                                          XBinary::PDSTRUCT *pPdStruct) override;
 
 protected:
     virtual void _processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId,

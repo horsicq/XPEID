@@ -133,6 +133,126 @@ static QString _normalizeSignature(const QString &sSignature)
 //     return (m_listSignatures.count() > 0);
 // }
 
+static QString _getTypeFromFileName(const QString &sFilePath)
+{
+    QString sFileName = QFileInfo(sFilePath).fileName().toLower();
+
+    if (sFileName.startsWith("compiler")) return QString("Compiler");
+    if (sFileName.startsWith("packer")) return QString("Packer");
+    if (sFileName.startsWith("protector")) return QString("Protector");
+    if (sFileName.startsWith("protection")) return QString("Protection");
+    if (sFileName.startsWith("crypter")) return QString("Crypter");
+    if (sFileName.startsWith("installer")) return QString("Installer");
+    if (sFileName.startsWith("joiner")) return QString("Joiner");
+    if (sFileName.startsWith("overlay")) return QString("Overlay");
+    if (sFileName.startsWith("sfx")) return QString("SFX");
+
+    return QString("Unknown");
+}
+
+bool XPEID::isSignatureFileValid(const QString &sSignatureFilePath)
+{
+    bool bResult = false;
+
+    QFileInfo fileInfo(sSignatureFilePath);
+
+    if (fileInfo.isFile()) {
+        bResult = sSignatureFilePath.endsWith(".userdb.txt", Qt::CaseInsensitive);
+    }
+
+    return bResult;
+}
+
+QList<XScanEngine::SIGNATURE_RECORD> XPEID::getSignaturesFromData(const QString &sData, const QString &sSignatureFilePath, XBinary::FT fileType,
+                                                                    XBinary::PDSTRUCT *pPdStruct)
+{
+    QList<SIGNATURE_RECORD> listResult;
+
+    QString sType = _getTypeFromFileName(sSignatureFilePath);
+
+    QStringList listLines = sData.split("\n");
+    qint32 nNumberOfLines = listLines.count();
+
+    QString sCurrentName;
+    QString sCurrentSignature;
+    bool bCurrentEpOnly = true;
+
+    for (qint32 i = 0; (i < nNumberOfLines) && XBinary::isPdStructNotCanceled(pPdStruct); i++) {
+        QString sLine = listLines.at(i).trimmed();
+
+        if (sLine.isEmpty()) {
+            continue;
+        }
+
+        if (_isUserDBComment(sLine)) {
+            continue;
+        }
+
+        if (sLine.startsWith("[")) {
+            // Finalize previous entry
+            if (!sCurrentName.isEmpty() && !sCurrentSignature.isEmpty()) {
+                SIGNATURE_RECORD record = {};
+                record.fileType = fileType;
+                record.sFilePath = sSignatureFilePath;
+                record.sType = sType;
+                record.sName = sCurrentName;
+                record.sText = _normalizeSignature(sCurrentSignature);
+                record.sInfo = bCurrentEpOnly ? QString("ep_only") : QString();
+
+                listResult.append(record);
+            }
+
+            // Start new entry
+            qint32 nPos = sLine.indexOf("]");
+            if (nPos != -1) {
+                sCurrentName = sLine.mid(1, nPos - 1).trimmed();
+            } else {
+                sCurrentName = sLine.mid(1).trimmed();
+            }
+
+            sCurrentSignature.clear();
+            bCurrentEpOnly = true;
+            continue;
+        }
+
+        if (sLine.startsWith("signature", Qt::CaseInsensitive)) {
+            qint32 nEqPos = sLine.indexOf("=");
+
+            if (nEqPos != -1) {
+                sCurrentSignature = sLine.mid(nEqPos + 1).trimmed();
+            }
+
+            continue;
+        }
+
+        if (sLine.startsWith("ep_only", Qt::CaseInsensitive)) {
+            qint32 nEqPos = sLine.indexOf("=");
+
+            if (nEqPos != -1) {
+                QString sValue = sLine.mid(nEqPos + 1).trimmed().toLower();
+                bCurrentEpOnly = (sValue == "true");
+            }
+
+            continue;
+        }
+    }
+
+    // Finalize last entry
+    if (!sCurrentName.isEmpty() && !sCurrentSignature.isEmpty()) {
+        SIGNATURE_RECORD record = {};
+        record.fileType = fileType;
+        record.sFilePath = sSignatureFilePath;
+        record.sType = sType;
+        record.sName = sCurrentName;
+        record.sText = _normalizeSignature(sCurrentSignature);
+        record.sInfo = bCurrentEpOnly ? QString("ep_only") : QString();
+
+        listResult.append(record);
+    }
+
+    return listResult;
+}
+
 void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId,
                             XBinary::FT fileType, XScanEngine::SCAN_OPTIONS *pOptions, bool bAddUnknown, XBinary::PDSTRUCT *pPdStruct)
 {
