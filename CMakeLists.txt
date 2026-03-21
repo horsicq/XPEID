@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 project(XPEID)
 
 # Qt is optional for configuration; the build will require Qt core headers and libraries to compile successfully.
-find_package(Qt5 COMPONENTS Core QUIET)
+find_package(Qt5 COMPONENTS Core Concurrent QUIET)
 
 add_library(XPEID STATIC
     xpeid.cpp
@@ -25,8 +25,9 @@ target_include_directories(XPEID PUBLIC
 
 if (Qt5Core_FOUND)
     target_link_libraries(XPEID PUBLIC Qt5::Core)
-else()
-    message(WARNING "Qt5 Core not found; XPEID will compile only if Qt headers/libraries are available in include/link paths.")
+endif()
+if (Qt5Concurrent_FOUND)
+    target_link_libraries(XPEID PUBLIC Qt5::Concurrent)
 endif()
 
 # Provide the list of sources for projects that collect sources into a single target.
