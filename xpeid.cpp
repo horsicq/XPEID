@@ -48,7 +48,6 @@ static QString _normalizeSignature(const QString &sSignature)
     return XBinary::convertSignature(sSignature);
 }
 
-
 static QString _getTypeFromFileName(const QString &sFilePath)
 {
     QString sFileName = QFileInfo(sFilePath).fileName().toLower();
@@ -80,7 +79,7 @@ bool XPEID::isSignatureFileValid(const QString &sSignatureFilePath)
 }
 
 QList<XScanEngine::SIGNATURE_RECORD> XPEID::getSignaturesFromData(const QString &sData, const QString &sSignatureFilePath, XBinary::FT fileType,
-                                                                    XBinary::PDSTRUCT *pPdStruct)
+                                                                  XBinary::PDSTRUCT *pPdStruct)
 {
     QList<SIGNATURE_RECORD> listResult;
 
@@ -144,7 +143,7 @@ QList<XScanEngine::SIGNATURE_RECORD> XPEID::getSignaturesFromData(const QString 
             {
                 qint32 nVersionPos = -1;
                 qint32 nNameLen = sCurrentName.length();
-                for (qint32 j = 0; j < nNameLen; ) {
+                for (qint32 j = 0; j < nNameLen;) {
                     while (j < nNameLen && sCurrentName.at(j) == QChar(' ')) {
                         j++;
                     }
@@ -289,8 +288,8 @@ struct _XPEID_SCAN_CONTEXT {
     }
 };
 
-void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId,
-                            XBinary::FT fileType, XScanEngine::SCAN_OPTIONS *pOptions, bool bAddUnknown, XBinary::PDSTRUCT *pPdStruct)
+void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId, XBinary::FT fileType,
+                           XScanEngine::SCAN_OPTIONS *pOptions, bool bAddUnknown, XBinary::PDSTRUCT *pPdStruct)
 {
     Q_UNUSED(fileType)
     Q_UNUSED(bAddUnknown)
