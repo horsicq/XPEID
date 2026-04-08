@@ -568,7 +568,7 @@ ep_only = true
 signature = BA ?? ?? B4 30 CD 21 3C 02 73 ?? 33 C0 06 50 CB
 ep_only = true
 
-[CC286xí v2.1]
+[CC286xï¿½ v2.1]
 signature = E9 J1 J1 EB ?? 9A ?? ?? ?? ?? 81 ?? ?? ?? EB ?? 66 ?? ?? ?? ?? ?? EA ?? ?? ?? ?? FF E6
 ep_only = true
 
@@ -1580,7 +1580,7 @@ ep_only = true
 signature = EB 01 68 EB 01 ?? ?? ?? ?? 83 EC 0C 53 56 57 EB 01 ?? 83 3D ?? ?? ?? ?? 00 74 08 EB 01 E9 E9 56 01 00 00 EB 02 E8 E9 C7 05 ?? ?? ?? ?? 01 00 00 00 EB 01 C2 E8 E2 05 00 00 EB 02 DA 9F 68 ?? ?? ?? ?? 68 ?? ?? ?? ?? B8 ?? ?? ?? ?? FF D0 59 59 EB 01 C8 EB 02
 ep_only = true
 
-[EÓÎµØ´ø-> ÔÂºÚ·ç¸ß]
+[Eï¿½ÎµØ´ï¿½-> ï¿½ÂºÚ·ï¿½ï¿½]
 signature = 55 8B EC B8 ?? ?? ?? ?? BB ?? ?? ?? ?? 50 E8 00 00 00 00 58 2D A7 1A 00 00 B9 6C 1A 00 00 BA 20 1B 00 00 BE 00 10 00 00 BF B0 53 00 00 BD EC 1A 00 00 03 E8 81 75 00 ?? ?? ?? ?? 81 75 04 ?? ?? ?? ?? 81 75 08 ?? ?? ?? ?? 81 75 0C ?? ?? ?? ?? 81 75 10
 ep_only = true
 
@@ -2908,7 +2908,7 @@ ep_only = true
 signature = 50 43 52 59 50 54 FF 76 33 2E 35 31 00 E9
 ep_only = true
 
-[PcShare ÎÄ¼þÀ¦°óÆ÷ v4.0 -> ÎÞ¿É·ÇÒé]
+[PcShare ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ v4.0 -> ï¿½Þ¿É·ï¿½ï¿½ï¿½]
 signature = 55 8B EC 6A FF 68 90 34 40 00 68 B6 28 40 00 64 A1
 ep_only = true
 
@@ -3260,9 +3260,6 @@ ep_only = true
 signature = E9 J1 J1 68 ?? ?? 60 BF ?? ?? B9 ?? ?? B0 ?? 2E ?? ?? FE C0 47 E2 ?? 61 C7 ?? ?? ?? ?? ?? C6 ?? ?? ?? ?? C3
 ep_only = true
 
-[RAR Archive]
-signature = 52 61 72 21
-ep_only = true
 
 [RAR Configuration file]
 signature = 52 41 52 20 43 4F 4E 46 49 47
@@ -4880,31 +4877,31 @@ ep_only = true
 signature = EB 05 E8 EB 04 40 00 EB FA E8 0A 00 00 00 E8 EB 0C 00 00 E8 F6 FF FF FF E8 F2 FF FF FF 83 C4 08 74 04 75 02 EB 02 EB 01 81 E8 0A 00 00 00 E8 EB 0C 00 00 E8 F6 FF FF FF E8 F2 FF FF FF 83 C4 08 74 04 75 02 EB 02 EB 01 81 50 E8 02 00 00 00 29 5A 58 6B C0 03 E8 02 00 00 00 29 5A 83 C4 04 58 74 04 75 02 EB 02 EB 01 81 0F 31 50 0F 31 E8 0A 00 00 00 E8 EB 0C 00 00 E8 F6 FF FF FF E8 F2 FF FF FF 83 C4 08 2B 04 24 74 04 75 02 EB 02 EB 01 81 83 C4 04 E8 0A 00 00 00 E8 EB 0C 00 00 E8 F6 FF FF FF E8 F2 FF FF FF 83 C4 08 3D FF 0F 00 00 EB 01 68 EB 02 CD 20 EB 01 E8 76 1B EB 01 68 EB 02 CD 20 EB 01 E8 CC 66 B8 FE 00 74 04 75 02 EB 02 EB 01 81 66 E7 64 E8 0A 00 00 00 E8 EB 0C 00 00 E8 F6 FF FF FF E8 F2 FF FF FF 83 C4 08 74 04 75 02 EB 02 EB 01 81 0F 31 50 0F 31
 ep_only = true
 
-[²Ø¾¨¸óEXEÎÄ¼þÀ¦°ó»ú »áÔ±×¨°æ -> ³Â¾­èº]
+[ï¿½Ø¾ï¿½ï¿½ï¿½EXEï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ô±×¨ï¿½ï¿½ -> ï¿½Â¾ï¿½ï¿½]
 signature = 55 8B EC 83 C4 E4 53 56 57 33 C0 89 45 E4 89 45
 ep_only = true
 
-[½ÌÖ÷EXEÎÄ¼þÀ¦°óÆ÷ v1.0 -> ½ÌÖ÷]
+[ï¿½ï¿½ï¿½ï¿½EXEï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ v1.0 -> ï¿½ï¿½ï¿½ï¿½]
 signature = 55 8B EC 6A FF 68 08 4B 40 00 68 36 3A 40 00 64 A1
 ep_only = true
 
-[ÎÄ¼þÀ¦°óÆ÷ v1.0 -> ÐíÔÆ]
+[ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ v1.0 -> ï¿½ï¿½ï¿½ï¿½]
 signature = 60 E8 00 00 00 00 5D 81 ED 0A 4A 44 00 BB 04 4A 44
 ep_only = true
 
-[ÎÄ¼þÀ¦°óÆ÷ v1.0 -> ÐíÔÆ]
+[ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ v1.0 -> ï¿½ï¿½ï¿½ï¿½]
 signature = 64 A1 00 00 00 00 55 89 E5 6A FF 68 1C 30 40 00
 ep_only = true
 
-[ÐÄÆæEXEºÏ²¢Æ÷ -> yy66]
+[ï¿½ï¿½ï¿½ï¿½EXEï¿½Ï²ï¿½ï¿½ï¿½ -> yy66]
 signature = 68 78 18 40 00 E8 F0 FF FF FF 00 00 00 00 00 00 30
 ep_only = true
 
-[Ü¥±±Ñ¹Ëõ 2.2b Anti -> xiaohui]
+[Ü¥ï¿½ï¿½Ñ¹ï¿½ï¿½ 2.2b Anti -> xiaohui]
 signature = EB F4 11 55 07 8B EC B8 14 80 0E 03 E8 D1 09 00 0A 57 33 D2 FF 75 18 B9 E8 1F DE 16 81 C0 8D BD EE 7F FB F8
 ep_only = true
 
-[Ü¥±±Ñ¹Ëõ 2.2b Anti -> xiaohui]
+[Ü¥ï¿½ï¿½Ñ¹ï¿½ï¿½ 2.2b Anti -> xiaohui]
 signature = 68 ?? ?? ?? ?? E8 01 00 00 00 C3 C3 11 55 07 8B EC B8 14 80 0E 03 E8 D1 09 00 0A 57 33 D2 FF 75 18 B9 E8 1F DE 16 81 C0 8D BD EE 7F FB F8
 ep_only = true
 
@@ -5248,11 +5245,11 @@ ep_only = false
 signature = ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 1A 4A 61 72 1B
 ep_only = false
 
-[LY_WGKX * Íâ¹Ò¿ËÐÇ V2.X -> www.szleyu.com * Sign.By.fly * 20080122]
+[LY_WGKX * ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ V2.X -> www.szleyu.com * Sign.By.fly * 20080122]
 signature = 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4C 59 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 01 00 4D 79 46 75 6E 00 62 73 00 00
 ep_only = false
 
-[LY_WGKX * Íâ¹Ò¿ËÐÇ V2.X -> www.szleyu.com * Sign.By.fly * 20080122]
+[LY_WGKX * ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ V2.X -> www.szleyu.com * Sign.By.fly * 20080122]
 signature = 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4C 59 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? 00 00 00 00 00
 ep_only = false
 

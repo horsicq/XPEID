@@ -36,6 +36,11 @@ QString XPEID::getEngineName()
     return QString("PEiD");
 }
 
+XScanEngine::SCANENGINETYPE XPEID::getEngineType()
+{
+    return SCANENGINETYPE_PEID;
+}
+
 static bool _isUserDBComment(const QString &sLine)
 {
     QString s = sLine.trimmed();
@@ -59,6 +64,7 @@ static QString _getTypeFromFileName(const QString &sFilePath)
     if (sFileName.startsWith("crypter")) return QString("Crypter");
     if (sFileName.startsWith("installer")) return QString("Installer");
     if (sFileName.startsWith("joiner")) return QString("Joiner");
+    if (sFileName.startsWith("archive")) return QString("Archive");
     if (sFileName.startsWith("overlay")) return QString("Overlay");
     if (sFileName.startsWith("sfx")) return QString("SFX");
 
@@ -291,9 +297,6 @@ struct _XPEID_SCAN_CONTEXT {
 void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId, XBinary::FT fileType,
                            XScanEngine::SCAN_OPTIONS *pOptions, bool bAddUnknown, XBinary::PDSTRUCT *pPdStruct)
 {
-    Q_UNUSED(fileType)
-    Q_UNUSED(bAddUnknown)
-
     if (!pScanResult) {
         return;
     }
@@ -308,13 +311,17 @@ void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESUL
 
     qint32 nNumberOfSignatures = m_listSignatures.count();
 
-    // Separate EP and non-EP signature indices
+    // Separate EP and non-EP signature indices, filtered by fileType
     QList<qint32> listEpIndices;
     QList<qint32> listNonEpIndices;
     qint32 nMaxEpSigBytes = 0;
 
     for (qint32 i = 0; i < nNumberOfSignatures; i++) {
         const SIGNATURE_RECORD &sig = m_listSignatures.at(i);
+
+        if (!XBinary::checkFileType(sig.fileType, fileType)) {
+            continue;
+        }
 
         if (sig.bIsEP) {
             listEpIndices.append(i);
@@ -332,14 +339,14 @@ void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESUL
     qint64 nEpOffset = XFormats::getEntryPointOffset(fileType, pDevice);
     QString sEpSignature;
 
-    if ((nMaxEpSigBytes > 0) && (nEpOffset > 0) && (nEpOffset < nSize)) {
+    if ((nMaxEpSigBytes > 0) && (nEpOffset >= 0) && (nEpOffset < nSize)) {
         sEpSignature = binary.getSignature(nEpOffset, nMaxEpSigBytes).toLower();
     }
 
     XScanEngine::SCANID resultId = {};
     resultId.sUuid = XBinary::generateUUID();
     resultId.fileType = fileType;
-    resultId.filePart = XBinary::FILEPART_HEADER;
+    resultId.filePart = parentId.filePart;
     resultId.nSize = nSize;
 
     qint32 _nFreeIndex = XBinary::getFreeIndex(pPdStruct);
@@ -417,6 +424,20 @@ void XPEID::_processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESUL
     }
 
     XBinary::setPdStructFinished(pPdStruct, _nFreeIndex);
+
+    if (bAddUnknown && pScanResult->listRecords.isEmpty()) {
+        XScanEngine::SCANSTRUCT ss = {};
+        ss.id = resultId;
+        ss.parentId = parentId;
+        ss.sType = XScanEngine::recordTypeIdToString(XScanEngine::RECORD_TYPE_UNKNOWN);
+        ss.type = XScanEngine::RECORD_TYPE_UNKNOWN;
+        ss.name = XScanEngine::RECORD_NAME_UNKNOWN;
+        ss.bIsUnknown = true;
+        ss.bIsHeuristic = false;
+        ss.bIsAHeuristic = false;
+
+        pScanResult->listRecords.append(ss);
+    }
 
     if (pScanID) {
         *pScanID = resultId;
