@@ -1,0 +1,44 @@
+name: DB Release
+
+on:
+    push:
+        branches: ["master"]
+    workflow_dispatch:
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Clone XPEID
+              run: |
+                  git clone https://github.com/horsicq/XPEID XPEID
+
+            - name: Create peid.zip
+              if: ${{ hashFiles('XPEID/peid/info.ini') != '' }}
+              run: |
+                  cd XPEID
+                  zip -r ../peid.zip peid
+                  cd ..
+
+            - name: Read peid/info.ini
+              if: ${{ hashFiles('XPEID/peid/info.ini') != '' }}
+              id: peid_info
+              run: |
+                  PEID_INFO=$(cat XPEID/peid/info.ini)
+                  echo "PEID_INFO<<EOF" >> $GITHUB_OUTPUT
+                  echo "$PEID_INFO" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Update peid release
+              if: ${{ hashFiles('XPEID/peid/info.ini') != '' }}
+              uses: softprops/action-gh-release@v1
+              with:
+                  files: peid.zip
+                  name: "peid"
+                  tag_name: peid
+                  body: ${{ steps.peid_info.outputs.PEID_INFO }}
+                  draft: false
+                  prerelease: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
