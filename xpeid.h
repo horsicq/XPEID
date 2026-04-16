@@ -36,6 +36,7 @@ public:
     virtual bool isSignatureFileValid(const QString &sSignatureFilePath) override;
     virtual QList<SIGNATURE_RECORD> getSignaturesFromData(const QString &sData, const QString &sSignatureFilePath, XBinary::FT fileType,
                                                           XBinary::PDSTRUCT *pPdStruct) override;
+    virtual bool isDatabaseUsing();
 
 protected:
     virtual void _processDetect(XScanEngine::SCANID *pScanID, XScanEngine::SCAN_RESULT *pScanResult, QIODevice *pDevice, const SCANID &parentId, XBinary::FT fileType,

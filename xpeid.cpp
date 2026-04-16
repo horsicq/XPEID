@@ -84,6 +84,11 @@ bool XPEID::isSignatureFileValid(const QString &sSignatureFilePath)
     return bResult;
 }
 
+bool XPEID::isDatabaseUsing()
+{
+    return true;
+}
+
 QList<XScanEngine::SIGNATURE_RECORD> XPEID::getSignaturesFromData(const QString &sData, const QString &sSignatureFilePath, XBinary::FT fileType,
                                                                   XBinary::PDSTRUCT *pPdStruct)
 {
