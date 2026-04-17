@@ -12,15 +12,6 @@ set(XPEID_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xpeid.h
 )
 
-get_property(_xpeid_install_registered GLOBAL PROPERTY XPEID_INSTALL_REGISTERED)
-if(NOT _xpeid_install_registered)
-    if(COMMAND deploy_install_directory)
-        deploy_install_directory(
-            SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/peid"
-            INSTALL_DESTINATION peid
-            WINDOWS_APPDATA_SUBDIR "${PROJECT_NAME}"
-        )
-    endif()
-
-    set_property(GLOBAL PROPERTY XPEID_INSTALL_REGISTERED TRUE)
+if (DEFINED X_RESOURCES)
+    install (DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/peid DESTINATION ${X_RESOURCES} OPTIONAL)
 endif()
