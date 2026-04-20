@@ -1,4 +1,5 @@
-; PEiD signature database - archive (PE)
+; PEiD signature database - archive
+; Sanitized for XPEID (3 entries)
 
 [RAR Archive]
 signature = 52 61 72 21

@@ -1,5 +1,5 @@
 ; PEiD signature database - file_format
-; Auto-categorized from userdb.txt (90 entries)
+; Sanitized for XPEID (89 entries)
 
 [3DMark Database file]
 signature = 33 44 4D 61 72 6B 20 44 61 74 61 62 61 73 65 20 46 69 6C 65
@@ -11,10 +11,6 @@ ep_only = true
 
 [Adlib Sample Audio file]
 signature = 47 4F 4C 44 20 53 41 4D 50 4C 45
-ep_only = true
-
-[Adobe PDF (Portable document) Version %v3.%v4]
-signature = 25 50 44 46 2D V3 2E V4
 ep_only = true
 
 [Adobe PhotoShop Graphics format]

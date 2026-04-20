@@ -1,5 +1,5 @@
 ; PEiD signature database - overlay
-; Auto-categorized from userdb.txt (5 entries)
+; Sanitized for XPEID (5 entries)
 
 [Crinkler V0.1-V0.2 -> Rune L.H.Stubbe and Aske Simon Christensen]
 signature = B9 ?? ?? ?? ?? 01 C0 68 ?? ?? ?? ?? 6A 00 58 50 6A 00 5F 48 5D BB 03 00 00 00 BE ?? ?? ?? ?? E9

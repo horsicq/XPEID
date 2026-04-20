@@ -1,9 +1,5 @@
 ; PEiD signature database - dos_extender
-; Auto-categorized from userdb.txt (10 entries)
-
-[CauseWay DOS Extender v2.64, v3.25 1992-95]
-signature = EB J3 8B E8 8C C6 0E 1F 8C C0 05 ?? ?? 01 ?? ?? ?? B8 ?? ?? CD 21 3C ?? 73
-ep_only = true
+; Sanitized for XPEID (7 entries)
 
 [CauseWay DOS Extender v3.25]
 signature = FA 16 1F 26 ?? ?? ?? 83 ?? ?? 8E D0 FB 06 16 07 BE ?? ?? 8B FE B9 ?? ?? F3 A4 07
@@ -25,16 +21,8 @@ ep_only = true
 signature = 0E 1F 8C 1E ?? ?? 8C 06 ?? ?? FC B4 30 CD 21 3C
 ep_only = true
 
-[MetaWare High C + Phar Lap DOS Extender 1983-89]
-signature = EB J3 33 ED 2E 8E 1E ?? ?? 26 A1 ?? ?? A3 ?? ?? 26 8B 1E ?? ?? B1 ?? 4B
-ep_only = true
-
 [MetaWare High C Run-Time Library + Phar Lap DOS Extender 1983-89]
 signature = B8 ?? ?? 50 B8 ?? ?? 50 CB
-ep_only = true
-
-[Phar Lap DOS Extender 1986-91]
-signature = EB J3 8C D8 8E C0 B8 ?? ?? 8E D8 BB ?? ?? 8C C0 2B D8 81 ?? ?? ?? B4 4A CD 21
 ep_only = true
 
 [PMODE/W v.1.12, 1.16, 1.21, 1.33 DOS extender]
