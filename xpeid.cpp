@@ -257,9 +257,14 @@ struct _XPEID_SCAN_CONTEXT {
         buffer.open(QIODevice::ReadOnly);
 
         XBinary bin(&buffer);
-        XBinary::_MEMORY_MAP mm = bin.getMemoryMap(XBinary::MAPMODE_UNKNOWN, pPdStruct);
+        // Pass nullptr so each thread gets a stack-local PDSTRUCT inside
+        // getMemoryMap/find_signature instead of racing on the shared one.
+        // getFreeIndex/setPdStructInit/setPdStructFinished are not thread-safe;
+        // the only safe shared-pPdStruct operations here are the read-only
+        // bIsStop check above and the mutex-protected increment below.
+        XBinary::_MEMORY_MAP mm = bin.getMemoryMap(XBinary::MAPMODE_UNKNOWN, nullptr);
 
-        bool bMatch = bin.isSignaturePresent(&mm, 0, nSize, signature.sText, pPdStruct);
+        bool bMatch = bin.isSignaturePresent(&mm, 0, nSize, signature.sText, nullptr);
 
         qint64 nElapsedTime = elapsedTimer.elapsed();
 
