@@ -254,7 +254,9 @@ struct _XPEID_SCAN_CONTEXT {
 
         QBuffer buffer;
         buffer.setData(*pbaData);
-        buffer.open(QIODevice::ReadOnly);
+        if (!buffer.open(QIODevice::ReadOnly)) {
+            return;
+        }
 
         XBinary bin(&buffer);
         // Pass nullptr so each thread gets a stack-local PDSTRUCT inside
