@@ -34,6 +34,7 @@ public:
     virtual QString getEngineName() override;
     virtual SCANENGINETYPE getEngineType() override;
     virtual bool isSignatureFileValid(const QString &sSignatureFilePath) override;
+    virtual bool isSignatureNameValid(const QString &sSignatureName) override;
     virtual QList<SIGNATURE_RECORD> getSignaturesFromData(const QString &sData, const QString &sSignatureFilePath, XBinary::FT fileType,
                                                           XBinary::PDSTRUCT *pPdStruct) override;
     virtual bool isDatabaseUsing();

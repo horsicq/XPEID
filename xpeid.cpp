@@ -78,10 +78,15 @@ bool XPEID::isSignatureFileValid(const QString &sSignatureFilePath)
     QFileInfo fileInfo(sSignatureFilePath);
 
     if (fileInfo.isFile()) {
-        bResult = sSignatureFilePath.endsWith(".userdb.txt", Qt::CaseInsensitive);
+        bResult = isSignatureNameValid(fileInfo.fileName());
     }
 
     return bResult;
+}
+
+bool XPEID::isSignatureNameValid(const QString &sSignatureName)
+{
+    return sSignatureName.endsWith(".userdb.txt", Qt::CaseInsensitive);
 }
 
 bool XPEID::isDatabaseUsing()
