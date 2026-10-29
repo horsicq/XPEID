@@ -1,0 +1,3 @@
+[submodule "XScanEngine"]
+	path = XScanEngine
+	url = https://github.com/horsicq/XScanEngine.git
