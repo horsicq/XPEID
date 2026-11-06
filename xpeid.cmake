@@ -1,17 +1,20 @@
-include_directories(${CMAKE_CURRENT_LIST_DIR})
+if(NOT DEFINED WITH_PEID OR WITH_PEID)
+    add_definitions(-DUSE_PEID)
+    include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-if (NOT DEFINED XSCANENGINE_SOURCES)
-    include(${CMAKE_CURRENT_LIST_DIR}/../XScanEngine/xscanengine.cmake)
-    set(XPEID_SOURCES ${XPEID_SOURCES} ${XSCANENGINE_SOURCES})
-endif()
+    if (NOT DEFINED XSCANENGINE_SOURCES)
+        include(${CMAKE_CURRENT_LIST_DIR}/../XScanEngine/xscanengine.cmake)
+        set(XPEID_SOURCES ${XPEID_SOURCES} ${XSCANENGINE_SOURCES})
+    endif()
 
-set(XPEID_SOURCES
-    ${XPEID_SOURCES}
-    ${XSCANENGINE_SOURCES}
-    ${CMAKE_CURRENT_LIST_DIR}/xpeid.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xpeid.h
-)
+    set(XPEID_SOURCES
+        ${XPEID_SOURCES}
+        ${XSCANENGINE_SOURCES}
+        ${CMAKE_CURRENT_LIST_DIR}/xpeid.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/xpeid.h
+    )
 
-if (DEFINED X_RESOURCES)
-    install (DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/peid DESTINATION ${X_RESOURCES} OPTIONAL)
+    if (DEFINED X_RESOURCES)
+        install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/peid DESTINATION ${X_RESOURCES} OPTIONAL)
+    endif()
 endif()
